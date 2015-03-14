@@ -42,7 +42,9 @@ public class DiscountsFragment extends Fragment {
                 percentageList
         );
         listView.setAdapter(mDiscountAdapter);
+        for(int i = 0; i < percentageList.size(); i++) {
 
+        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -55,6 +57,21 @@ public class DiscountsFragment extends Fragment {
 
         });
         return rootView;
+    }
+
+    public int getColorForPercentage(int percentage) {
+        switch (percentage) {
+            case 30:
+               return R.color.green;
+            case 40:
+                return R.color.purple;
+            case 50:
+                return R.color.red;
+            case 70:
+                return R.color.blue;
+            default:
+                return R.color.white;
+        }
     }
 
 }
