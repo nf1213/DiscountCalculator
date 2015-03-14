@@ -3,4 +3,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="original_price">Original Price</string>
+    <string name="you_pay">You Pay</string>
+    <string name="formatted_price">$0.00</string>
 </resources>
