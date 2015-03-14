@@ -36,7 +36,7 @@ public class DetailFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             mPercentage = (Integer) intent.getIntExtra(Intent.EXTRA_TEXT, 0);
-            percentageTextView.setText(Integer.toString(mPercentage));
+            percentageTextView.setText(Integer.toString(mPercentage) + "%");
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
