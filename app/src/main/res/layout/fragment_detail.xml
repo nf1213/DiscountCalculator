@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/discount_editText"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:maxLength="6" />
 
     <TextView
         android:id="@+id/selected_discount"
@@ -31,12 +32,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/formatted_price"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/editText" />
 
 </LinearLayout>
