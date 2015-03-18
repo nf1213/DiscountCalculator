@@ -1,5 +1,7 @@
 package com.example.kitten.discountcalculator;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,21 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 
 public class DiscountsFragment extends Fragment {
 
     private ListView listView;
-    private Integer[] percentages = {
-        30,
-        40,
-        50,
-        70
+    private Discount[] discounts = {
+        new Discount(30, R.drawable.green_touch_selector),
+        new Discount(40, R.drawable.purple_touch_selector),
+        new Discount(50, R.drawable.red_touch_selector),
+        new Discount(70, R.drawable.blue_touch_selector)
     };
-    private ArrayAdapter mDiscountAdapter;
+    private MyListAdapter mDiscountAdapter;
 
     public DiscountsFragment(){
 
@@ -35,28 +33,18 @@ public class DiscountsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_discounts, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView_discounts);
-        List<Integer> percentageList = new ArrayList<Integer>(Arrays.asList(percentages));
-        mDiscountAdapter = new ArrayAdapter(
+        mDiscountAdapter = new MyListAdapter(
                 getActivity(),
                 R.layout.list_item_discount,
-                R.id.discount_percentage,
-                percentageList
+                discounts
         );
         listView.setAdapter(mDiscountAdapter);
-
-        for(int i = 0; i < percentageList.size(); i++) {
-            View layout = mDiscountAdapter.getView(i, null, null);
-            //Why aren't they workingggg??
-            layout.setBackgroundResource(R.drawable.green_touch_selector);
-            TextView tv = (TextView) layout.findViewById(R.id.discount_percentage);
-            tv.setText("blah");
-        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Integer percentage = (Integer) mDiscountAdapter.getItem(i);
+                Integer percentage = (Integer) mDiscountAdapter.getItem(i).mPercentage;
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra(Intent.EXTRA_TEXT, percentage);
                 startActivity(intent);
@@ -66,18 +54,48 @@ public class DiscountsFragment extends Fragment {
         return rootView;
     }
 
-    public int getBackgroundForPercentage(int percentage) {
-        switch (percentage) {
-            case 30:
-               return R.drawable.green_touch_selector;
-            case 40:
-                return R.drawable.purple_touch_selector;
-            case 50:
-                return R.drawable.red_touch_selector;
-            case 70:
-                return R.drawable.blue_touch_selector;
-            default:
-                return R.color.white;
+
+    public class MyListAdapter extends ArrayAdapter<Discount> {
+
+        Context context;
+        int layoutResourceId;
+        Discount data[] = null;
+
+        public MyListAdapter(Context context, int layoutResourceId, Discount[] data) {
+            super(context, layoutResourceId, data);
+            this.layoutResourceId = layoutResourceId;
+            this.context = context;
+            this.data = data;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View row = convertView;
+            TextView percentageTv;
+
+            if(row == null)
+            {
+                LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+                row = inflater.inflate(layoutResourceId, parent, false);
+
+                percentageTv = (TextView) row.findViewById(R.id.discount_percentage);
+
+                Discount discount = data[position];
+                percentageTv.setText(Integer.toString(discount.mPercentage) + "%");
+                row.setBackgroundResource(discount.mBackgroundResource);
+            }
+
+            return row;
+        }
+    }
+
+    public class Discount {
+        int mPercentage;
+        int mBackgroundResource;
+
+        public Discount(int percentage, int backgroundResource) {
+            mPercentage = percentage;
+            mBackgroundResource = backgroundResource;
         }
     }
 
