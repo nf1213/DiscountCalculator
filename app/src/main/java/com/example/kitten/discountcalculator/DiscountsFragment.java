@@ -23,7 +23,7 @@ public class DiscountsFragment extends Fragment {
         new Discount(50, R.drawable.red_touch_selector),
         new Discount(70, R.drawable.blue_touch_selector)
     };
-    private MyListAdapter mDiscountAdapter;
+    private DiscountAdapter mDiscountAdapter;
 
     public DiscountsFragment(){
 
@@ -33,7 +33,7 @@ public class DiscountsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_discounts, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView_discounts);
-        mDiscountAdapter = new MyListAdapter(
+        mDiscountAdapter = new DiscountAdapter(
                 getActivity(),
                 R.layout.list_item_discount,
                 discounts
@@ -55,13 +55,13 @@ public class DiscountsFragment extends Fragment {
     }
 
 
-    public class MyListAdapter extends ArrayAdapter<Discount> {
+    public class DiscountAdapter extends ArrayAdapter<Discount> {
 
         Context context;
         int layoutResourceId;
         Discount data[] = null;
 
-        public MyListAdapter(Context context, int layoutResourceId, Discount[] data) {
+        public DiscountAdapter(Context context, int layoutResourceId, Discount[] data) {
             super(context, layoutResourceId, data);
             this.layoutResourceId = layoutResourceId;
             this.context = context;
