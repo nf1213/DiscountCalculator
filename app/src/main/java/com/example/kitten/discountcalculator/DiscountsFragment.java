@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +43,15 @@ public class DiscountsFragment extends Fragment {
                 percentageList
         );
         listView.setAdapter(mDiscountAdapter);
-        for(int i = 0; i < percentageList.size(); i++) {
 
+        for(int i = 0; i < percentageList.size(); i++) {
+            View layout = mDiscountAdapter.getView(i, null, null);
+            //Why aren't they workingggg??
+            layout.setBackgroundResource(R.drawable.green_touch_selector);
+            TextView tv = (TextView) layout.findViewById(R.id.discount_percentage);
+            tv.setText("blah");
         }
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -59,16 +66,16 @@ public class DiscountsFragment extends Fragment {
         return rootView;
     }
 
-    public int getColorForPercentage(int percentage) {
+    public int getBackgroundForPercentage(int percentage) {
         switch (percentage) {
             case 30:
-               return R.color.green;
+               return R.drawable.green_touch_selector;
             case 40:
-                return R.color.purple;
+                return R.drawable.purple_touch_selector;
             case 50:
-                return R.color.red;
+                return R.drawable.red_touch_selector;
             case 70:
-                return R.color.blue;
+                return R.drawable.blue_touch_selector;
             default:
                 return R.color.white;
         }
