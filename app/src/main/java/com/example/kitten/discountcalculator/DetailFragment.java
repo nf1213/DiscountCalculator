@@ -66,7 +66,8 @@ public class DetailFragment extends Fragment {
         mOriginalPrice = currencyToInteger(editText.getText().toString());
         Double percentOff = Double.valueOf(mPercentage) / 100.0;
         Double discountDouble = Double.valueOf(mOriginalPrice) * percentOff;
-        Integer discount = (discountDouble).intValue();
+        Long l = Math.round(discountDouble);
+        Integer discount = l.intValue();
         mNewPrice = mOriginalPrice - discount;
         finalPriceTextView.setText(integerToCurrency(mNewPrice));
     }
