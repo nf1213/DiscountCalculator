@@ -35,9 +35,17 @@ public class DetailFragment extends Fragment {
         finalPriceTextView = (TextView) rootView.findViewById(R.id.final_price);
         editText = (EditText) rootView.findViewById(R.id.discount_editText);
 
+        Bundle arguments = getArguments();
+        if(arguments != null) {
+            mPercentage = arguments.getInt("percent");
+        }
+
         Intent intent = getActivity().getIntent();
         if(intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             mPercentage = (Integer) intent.getIntExtra(Intent.EXTRA_TEXT, 0);
+        }
+
+        if (mPercentage != null) {
             percentageTextView.setText(Integer.toString(mPercentage) + "%");
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -46,10 +54,9 @@ public class DetailFragment extends Fragment {
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                    if(!(editText.getText().toString().equals(""))) {
+                    if (!(editText.getText().toString().equals(""))) {
                         calculatePrice();
-                    }
-                    else {
+                    } else {
                         finalPriceTextView.setText(integerToCurrency(0));
                     }
                 }

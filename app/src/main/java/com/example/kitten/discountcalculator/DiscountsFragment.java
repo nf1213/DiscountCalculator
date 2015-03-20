@@ -2,7 +2,6 @@ package com.example.kitten.discountcalculator;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,14 +15,18 @@ import android.widget.TextView;
 
 public class DiscountsFragment extends Fragment {
 
-    private ListView listView;
+    public interface Callback {
+        public void onItemClick(int position);
+    }
+
+    public ListView listView;
     private Discount[] discounts = {
         new Discount(30, R.drawable.green_touch_selector),
         new Discount(40, R.drawable.purple_touch_selector),
         new Discount(50, R.drawable.red_touch_selector),
         new Discount(70, R.drawable.blue_touch_selector)
     };
-    private DiscountAdapter mDiscountAdapter;
+    public DiscountAdapter mDiscountAdapter;
 
     public DiscountsFragment(){
 
@@ -44,10 +47,7 @@ public class DiscountsFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Integer percentage = (Integer) mDiscountAdapter.getItem(i).mPercentage;
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, percentage);
-                startActivity(intent);
+                ((Callback) getActivity()).onItemClick(i);
             }
 
         });
